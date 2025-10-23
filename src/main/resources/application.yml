@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: hacker-news-fetcher
+  
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@localhost:27017/hacker-news?authSource=admin
+
+server:
+  port: ${SERVER_PORT:8080}
+  jwt:
+    key: ${JWT_SECRET:4f7d9a2c1e6b8f3d0a5c9e2b7f4d1a8e3c0b9a6d2f8e1c7b5a9d3f6e4a0b7c2}
+    algorithm: ${JWT_ALGORITHM:HS256}
+    issuer: ${JWT_ISSUER:hacker-news-fetcher}
+    expiresIn: ${JWT_EXPIRATION:60m}
+
+api:
+  external:
+    hacker-news:
+      search_by_date: https://hn.algolia.com/api/v1/search_by_date
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    doc-expansion: none

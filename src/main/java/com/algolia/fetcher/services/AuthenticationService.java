@@ -29,7 +29,7 @@ public class AuthenticationService {
 
 
   @PostConstruct
-  private void createInitialUser() {
+  public void createInitialUser() {
     if (userRepository.findByUsername("admin").isEmpty()) {
       userRepository.save(UserEntity.builder()
               .username("admin")

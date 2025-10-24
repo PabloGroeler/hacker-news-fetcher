@@ -29,15 +29,18 @@ public class AuthenticationService {
 
 
   @PostConstruct
-  private void createInitialUser() {
-    if (userRepository.findByUsername("admin").isEmpty()) {
-      userRepository.save(UserEntity.builder()
-              .username("admin")
-              .password(passwordEncoder.encode("admin"))
-              .roles(Set.of("ADMIN"))
-              .build());
-      log.info("Created default admin user with username 'admin' and password 'admin' and ADMIN roles");
-    }
+  public void createInitialUser() {
+    userRepository.findByUsername("admin").ifPresentOrElse(
+            user -> log.debug("Admin user already exists"),
+            () -> {
+              userRepository.save(UserEntity.builder()
+                      .username("admin")
+                      .password(passwordEncoder.encode("admin"))
+                      .roles(Set.of("ADMIN"))
+                      .build());
+              log.info("Created default admin user with username 'admin' and password 'admin' and ADMIN roles");
+            }
+    );
   }
 
 
